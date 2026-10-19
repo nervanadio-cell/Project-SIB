@@ -1,6 +1,57 @@
 const config = window.SITE_CONFIG || {};
-const ready = Boolean(config.url && config.key && window.supabase);
-const db = ready ? window.supabase.createClient(config.url, config.key) : null;
+let ready = false;
+let db = null;
+let connectionPromise = null;
+
+function loadLibrary(url) {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        const timer = setTimeout(() => {
+            script.remove();
+            reject(new Error("Тайм-аут загрузки"));
+        }, 7000);
+        script.src = url;
+        script.onload = () => {
+            clearTimeout(timer);
+            if (window.supabase?.createClient) resolve();
+            else reject(new Error("Библиотека не запустилась"));
+        };
+        script.onerror = () => {
+            clearTimeout(timer);
+            script.remove();
+            reject(new Error("Библиотека недоступна"));
+        };
+        document.head.append(script);
+    });
+}
+
+async function connect() {
+    if (ready) return db;
+    if (connectionPromise) return connectionPromise;
+    connectionPromise = (async () => {
+        if (!config.url || !config.key) throw new Error("Настройки сайта устарели. Обновите страницу с очисткой кеша.");
+        if (!window.supabase?.createClient) {
+            const sources = [
+                "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js",
+                "https://unpkg.com/@supabase/supabase-js@2.118.0/dist/umd/supabase.js",
+                "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js"
+            ];
+            for (const url of sources) {
+                try {
+                    await loadLibrary(url);
+                    break;
+                } catch (error) {
+                    if (window.supabase?.createClient) break;
+                }
+            }
+        }
+        if (!window.supabase?.createClient) throw new Error("Библиотека Supabase не загрузилась. Проверьте сеть или блокировщик.");
+        db = window.supabase.createClient(config.url, config.key);
+        ready = true;
+        return db;
+    })().catch(error => { connectionPromise = null; throw error; });
+    return connectionPromise;
+}
 let currentUser = null;
 let mode = "login";
 let recoveryEmail = "";
@@ -32,7 +83,7 @@ function showMode(next) {
 function openModal(next = "login") {
     showMode(next);
     $("auth-modal").hidden = false;
-    if (!ready) authMessage("Сначала подключите Supabase в js/config.js.");
+    if (!ready) authMessage("Подключаю сервер...");
 }
 
 function closeModal() {
@@ -69,8 +120,9 @@ function showReviews(rows) {
 }
 
 async function loadReviews() {
-    if (!ready) {
-        $("review-list").textContent = "Отзывы появятся после подключения Supabase.";
+    try { await connect(); }
+    catch (error) {
+        $("review-list").textContent = "Не удалось подключить отзывы: " + error.message;
         return;
     }
     const { data, error } = await db.from("comments")
@@ -96,7 +148,7 @@ $("forgot-password").addEventListener("click", () => showMode("recover"));
 
 $("auth-form").addEventListener("submit", async event => {
     event.preventDefault();
-    if (!ready) return authMessage("Сначала подключите Supabase.");
+    try { await connect(); } catch (error) { return authMessage(error.message); }
     const email = $("auth-email").value.trim();
     const password = $("auth-password").value;
     const button = $("auth-submit");
@@ -129,7 +181,7 @@ $("auth-form").addEventListener("submit", async event => {
 
 $("recover-form").addEventListener("submit", async event => {
     event.preventDefault();
-    if (!ready) return authMessage("Сначала подключите Supabase.");
+    try { await connect(); } catch (error) { return authMessage(error.message); }
     recoveryEmail = $("recover-email").value.trim();
     const button = $("recover-form").querySelector("button");
     button.disabled = true;
@@ -147,7 +199,7 @@ $("recover-form").addEventListener("submit", async event => {
 
 $("reset-form").addEventListener("submit", async event => {
     event.preventDefault();
-    if (!ready) return authMessage("Сначала подключите Supabase.");
+    try { await connect(); } catch (error) { return authMessage(error.message); }
     const token = $("reset-code").value.trim();
     const password = $("reset-password").value;
     const button = $("reset-form").querySelector("button");
@@ -175,7 +227,8 @@ $("logout-button").addEventListener("click", async () => {
 
 $("review-form").addEventListener("submit", async event => {
     event.preventDefault();
-    if (!ready || !currentUser) return;
+    if (!currentUser) return;
+    try { await connect(); } catch (error) { return reviewMessage(error.message); }
     const body = $("review-text").value.trim();
     if (body.length < 2 || body.length > 500) return reviewMessage("Отзыв: от 2 до 500 символов.");
     const nickname = String(currentUser.user_metadata.nickname || "Участник").trim().slice(0, 30);
@@ -198,14 +251,18 @@ $("review-form").addEventListener("submit", async event => {
 
 async function init() {
     showUser();
-    await loadReviews();
-    if (!ready) return;
-    const { data } = await db.auth.getUser();
-    currentUser = data.user;
-    showUser();
-    db.auth.onAuthStateChange((_event, session) => {
-        currentUser = session?.user || null;
+    try {
+        await connect();
+        await loadReviews();
+        const { data } = await db.auth.getUser();
+        currentUser = data.user;
         showUser();
-    });
+        db.auth.onAuthStateChange((_event, session) => {
+            currentUser = session?.user || null;
+            showUser();
+        });
+    } catch (error) {
+        reviewMessage("Не удалось подключиться: " + error.message);
+    }
 }
 init();

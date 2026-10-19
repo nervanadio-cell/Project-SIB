@@ -1,0 +1,160 @@
+
+body {
+    background-color: #f1f6ef;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    color: #293d31;
+}
+
+header {
+    background: #214e35;
+    color: white;
+    text-align: center;
+    padding: 40px;
+}
+
+header h1 {
+    font-size: 32px;
+}
+
+nav {
+    background-color: #388752;
+    text-align: center;
+    padding: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 12px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #facc15;
+}
+
+main {
+    max-width: 850px;
+    margin: 25px auto;
+    padding: 15px;
+}
+
+h2 {
+    color: #317748;
+    text-align: center;
+}
+
+.intro {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 2px solid #cbdccd;
+}
+
+.card {
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 12px;
+    border-left: 6px solid;
+}
+
+.python {
+    background-color: #fef9c3;
+    border-color: #eab308;
+}
+
+.network {
+    background-color: #d1fae5;
+    border-color: #10b981;
+}
+
+.sql {
+    background-color: #dbeafe;
+    border-color: #3b82f6;
+}
+
+.security {
+    background-color: #fce7f3;
+    border-color: #ec4899;
+}
+
+.card h3 {
+    color: #214e35;
+}
+
+.resources {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 30px;
+}
+
+.resources h3 {
+    color: #317748;
+    margin-top: 30px;
+}
+
+.button {
+    display: inline-block;
+    color: white;
+    padding: 12px 20px;
+    margin: 10px 0;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.stepik {
+    background-color: #16a34a;
+}
+
+.tryhackme {
+    background-color: #dc2626;
+}
+
+.smartnation {
+    background-color: #2563eb;
+}
+
+.button:hover {
+    opacity: 0.8;
+}
+
+footer {
+    background-color: #214e35;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+nav{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px}
+nav a{margin:0}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.nav-button{background:#214e35;color:white;border:1px solid #91c39a;border-radius:8px;padding:9px 14px;font-weight:bold}
+.nav-button:hover,.form-button:hover{background:#1c5030}
+nav a:hover{color:#d0f4b7}
+.reviews{background:#fff;border:2px solid #cbdccd;border-radius:12px;padding:25px;margin:30px 0}
+.reviews>p{text-align:center}
+#review-form,#auth-form,#recover-form,#reset-form{display:grid;gap:10px}
+input,textarea{box-sizing:border-box;width:100%;padding:11px;border:1px solid #a4c9ad;border-radius:8px;background:white;color:#293d31}
+textarea{resize:vertical}
+.form-button{background:#317748;color:white;border:none;border-radius:8px;padding:12px;font-weight:bold}
+.review{background:#f1f6ef;padding:14px;border-radius:8px;margin:12px 0;overflow-wrap:anywhere}
+.review strong{color:#317748}
+.review time{color:#647d6c;font-size:12px;margin-left:8px}
+.review p{white-space:pre-wrap;margin-bottom:0}
+.message{font-size:14px;color:#245d38;min-height:16px}
+.modal{position:fixed;inset:0;z-index:100;background:#102418ba;display:flex;align-items:center;justify-content:center;padding:18px}
+.modal-box{box-sizing:border-box;position:relative;width:min(100%,380px);background:white;padding:25px;border-radius:14px;max-height:90vh;overflow:auto}
+.close-button{position:absolute;right:15px;top:10px;background:transparent;border:none;color:#293d31;font-size:28px}
+.auth-links{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:17px}
+.auth-links button{background:none;border:none;padding:0;text-align:left;color:#317748;text-decoration:underline;font-size:13px}
+[hidden]{display:none!important}
+.illustrations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-bottom:25px}
+.illustrations figure{margin:0;overflow:hidden;background:white;border:2px solid #cbdccd;border-radius:12px}
+.illustrations img{display:block;width:100%;aspect-ratio:1.65;object-fit:cover}
+.illustrations figcaption{padding:11px 13px;color:#245d38;font-size:14px;font-weight:bold;text-align:center}
+@media(max-width:600px){header{padding:25px 15px}main{margin:10px auto;padding:12px}nav{gap:10px}nav a{font-size:14px}.intro,.resources,.reviews{padding:18px}}
+@media(max-width:520px){.illustrations{grid-template-columns:1fr}}

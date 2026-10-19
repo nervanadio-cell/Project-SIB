@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-label="Компьютерная сеть">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#f5f0dd"/><stop offset="1" stop-color="#d8e9cf"/></linearGradient></defs>
+<rect width="640" height="380" fill="url(#bg)"/>
+<circle cx="525" cy="66" r="106" fill="#c6dbbc" opacity=".55"/><circle cx="115" cy="335" r="90" fill="#d6e5ca"/>
+<g stroke="#457653" stroke-width="7" fill="none" stroke-linejoin="round"><path d="M318 184V96H149V117M318 96h172v21M318 211v74H149v-17M318 285h172v-17"/></g>
+<g fill="#294f3d" stroke="#17362d" stroke-width="5">
+<rect x="259" y="161" width="118" height="55" rx="11"/>
+<rect x="80" y="110" width="140" height="98" rx="8"/>
+<rect x="420" y="110" width="140" height="98" rx="8"/>
+<rect x="80" y="243" width="140" height="99" rx="8"/>
+<rect x="420" y="243" width="140" height="99" rx="8"/>
+</g>
+<g fill="#a4c7a4"><rect x="94" y="125" width="112" height="67" rx="4"/><rect x="434" y="125" width="112" height="67" rx="4"/><rect x="94" y="258" width="112" height="68" rx="4"/><rect x="434" y="258" width="112" height="68" rx="4"/></g>
+<g fill="#315d46"><path d="M142 208v16h-23v7h62v-7h-24v-16z"/><path d="M482 208v16h-23v7h62v-7h-24v-16z"/></g>
+<g fill="#d4ebb5"><circle cx="294" cy="190" r="6"/><circle cx="318" cy="190" r="6"/><circle cx="342" cy="190" r="6"/></g>
+<path d="M270 224h93" stroke="#304c3c" stroke-width="3"/><g fill="#3a7551"><circle cx="151" cy="157" r="21"/><circle cx="490" cy="158" r="21"/><circle cx="151" cy="291" r="21"/><circle cx="490" cy="292" r="21"/></g>
+<g stroke="#dff3d7" stroke-width="5"><path d="M136 158h30m-15-15v30M475 158h30m-15-15v30M136 292h30m-15-15v30M475 292h30m-15-15v30"/></g>
+</svg>
